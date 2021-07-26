@@ -99,6 +99,76 @@
 </table>
 </body>
     
+    <script>
+    var c = document.createElement('p');
+    c.style.font = "80px bold"
+    var a;
+    fun = () => {
+        var t = new Date();
+        month = t.getMonth()
+        year = t.getFullYear()
+        date = t.getDate();
+        hours = t.getHours();
+        minutes = t.getMinutes();
+        seconds = t.getSeconds();
+        a = " Date is " + date + '/' + month + '/' + year + " and time is " + hours + ' : ' + minutes + ' : ' + seconds;
+        c.innerText = a;
+        var d = document.getElementById("timer");
+        d.appendChild(c);
+
+    }
+    itemJsonArray = [];
+    setInterval(fun, 1000)
+    addtolist = () => {
+        console.log("Updating List....")
+        title = document.getElementById('title').value
+        description = document.getElementById('Description').value
+        time = a
+
+        if (localStorage.getItem('itemJson') == null) {
+            itemJsonArray.push([title, description]);
+            localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
+        }
+        else {
+            itemJsonArrayStr = localStorage.getItem('itemJson');
+            itemJsonArray = JSON.parse('itemJsonArrayStr');
+            itemJsonArray.push([title, description]);
+            localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+        }
+
+
+        let tablebody = document.getElementById("tablebody");
+        let str = "";
+        itemJsonArray.forEach((element, index) => {
+            str +=
+                `
+        <tr>
+            <th scope="row">${index + 1}</th>
+            <td>${title}</td>
+            <td>${description}</td>
+            <td>${a}</td>
+            <td><button class="btn btn-primary" onclick="Deleted(${index})">Delete</button></td>
+        </tr>
+        `
+        });
+        tablebody.innerHTML = str;
+
+
+    }
+    function Deleted(index) {
+        console.log("Deleted element...")
+        itemJsonArrayStr = localStorage.getItem('itemJson');
+        itemJsonArray = JSON.parse('itemJsonArrayStr');
+        itemJsonArray.splice(index, 1)
+        localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
+    }
+
+
+    document.getElementById("submit").addEventListener('click', addtolist)
+</script>
+
+</html>
+    
     
     
     
